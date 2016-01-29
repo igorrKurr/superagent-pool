@@ -25,11 +25,11 @@ module.exports = pool
  */
 
 function pool (superagent) {
-  var end = superagent.Request.prototype.end
+  var end = superagent.request.Request.prototype.end
   var pending = {}
 
   // Monkey-path end
-  superagent.Request.prototype.end = function (fn) {
+  superagent.request.Request.prototype.end = function (fn) {
     if (!idempotent.test(this.method)) return end.apply(this, arguments)
     var key = serialize(this)
 
